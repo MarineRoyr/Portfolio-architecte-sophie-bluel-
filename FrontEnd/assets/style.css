@@ -129,7 +129,7 @@ table {
   border-spacing: 0;
 }
 /** end reset css**/
-body {
+main {
   max-width: 1140px;
   margin: auto;
   font-family: "Work Sans";
@@ -138,10 +138,15 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  margin: 50px 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  max-width: 1140px;
+  font-family: "Work Sans";
+  font-size: 14px;
 }
 section {
-  margin: 50px 0;
+  margin: 50px;
 }
 
 h1 {
@@ -175,9 +180,33 @@ nav li {
   font-size: 1.2em;
 }
 
-li:hover {
+.navLien a {
+  text-decoration: none;
+  color: black;
+}
+
+nav a:hover {
   color: #b1663c;
 }
+
+.loginLink {
+  font-weight: 700;
+}
+
+.logOut {
+  font-size: 1.1em;
+}
+
+#logo {
+  text-decoration: none;
+}
+
+#iconeInstagram {
+  vertical-align: middle;
+  width: 19.35px;
+  height: 19.35px;
+}
+
 #introduction {
   display: flex;
   align-items: center;
@@ -214,7 +243,7 @@ li:hover {
   font-size: 16px;
   font-family: "syne";
   border-radius: 60px;
-  background-color: white;
+  background-color: rgba(255, 254, 248, 1);
   padding: 9px 15px 9px 15px;
   border: solid rgba(29, 97, 84, 1) 1px;
 }
@@ -222,6 +251,110 @@ li:hover {
 .filters-button button:focus {
   background-color: rgba(29, 97, 84, 1);
   color: white;
+}
+
+.modeAdmin {
+  display: flex;
+  gap: 31px;
+  justify-content: center;
+  padding-left: 110px;
+}
+
+.editionBanner {
+  text-align: center;
+  gap: 10px;
+  font-family: "Work Sans";
+  color: #fff;
+  background-color: black;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  margin-bottom: 30px;
+  margin-top: 0;
+}
+
+.modifyProject {
+  display: flex;
+  gap: 20px;
+  padding-top: 8px;
+}
+
+.modifyProject a {
+  text-decoration: none;
+  color: black;
+}
+
+.modalContainer {
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vw;
+}
+
+.modalContainer.active {
+  display: block;
+}
+.modal {
+  width: 43%;
+  height: 38%;
+  top: 660px;
+  left: 405px;
+  border-radius: 10px;
+  background-color: #fff;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  background: #333333d3;
+}
+
+.closeModal {
+  padding: 8px 10px;
+  border: none;
+  position: absolute;
+  font-size: 1em;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.modalTitle {
+  font-family: "Work Sans";
+  font-size: 166%;
+  margin-bottom: 46px;
+}
+
+.projectModal {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: solid 1px #b3b3b3;
+  margin: 0px 105px 38px 105px;
+  gap: 9px;
+}
+
+.projectModal img {
+  width: 17%;
+  margin-bottom: 29px;
+}
+
+.newPhoto {
+  background-color: rgba(29, 97, 84, 1);
+  font-size: 100%;
+  font-family: "syne";
+  border-radius: 60px;
+  color: rgba(255, 254, 248, 1);
+  padding: 9px 15px 9px 15px;
+  border: solid rgba(29, 97, 84, 1) 1px;
+  width: 33%;
 }
 
 #portfolio h2 {
@@ -291,6 +424,8 @@ footer nav ul {
   margin: 2em;
 }
 
+/* Login PAGE ------------------------------------*/
+
 .loginPage {
   font-family: "Work Sans";
 }
@@ -319,10 +454,14 @@ footer nav ul {
   margin-right: 30%;
 }
 
-.forgotPasswword a {
+.forgotPassword {
   text-align: center;
-  color: rgba(61, 61, 61, 1);
   font-weight: 600;
+  font-size: 14px;
+}
+
+.forgotPassword a {
+  color: rgba(61, 61, 61, 1);
 }
 
 .enterEmail input,
@@ -337,7 +476,7 @@ footer nav ul {
   margin: 2em 0 1em 0;
 }
 
-.loginButton [type="submit"] {
+.logInButton [type="submit"] {
   font-family: "Syne";
   font-weight: 700;
   color: white;
@@ -351,12 +490,16 @@ footer nav ul {
 }
 
 .loginFooter {
-  margin-top: 200px;
+  margin-top: 150px;
   padding-top: 20px;
   padding-bottom: 24px;
   margin-bottom: 0;
+  font-size: 14px;
 }
 
-header a {
-  text-decoration: none;
+#error {
+  text-align: center;
+  margin-top: 5%;
+  font-weight: 700;
+  color: #b1663c;
 }

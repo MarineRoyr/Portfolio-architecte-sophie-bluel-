@@ -11,49 +11,52 @@
         rel="stylesheet">
     <meta name="description" content="">
     <link rel="stylesheet" href="./assets/style.css">
+    <script defer src="./scripts/login.js"></script>
 </head>
 
 <body class=loginPage>
     <header>
-        <a href="index.html">
-            <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-        </a>
-        <nav>
+
+        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+
+        <nav class="navLien">
             <ul>
-                <li>projets</li>
-                <li>contact</li>
-                <li>login</li>
-                <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+                <li><a href="index.html#mes-projets-title">projets</a></li>
+                <li><a href="index.html#contact">contact</a></li>
+                <li class="loginLink"> <a href="login.html">login</a></li>
+                <li> <img id="iconeInstagram" src="./assets/icons/instagram.png" alt="Instagram"></li>
             </ul>
         </nav>
     </header>
     <main>
         <h2 id="logInTitle">Log In</h2>
 
+
+
         <div class="loginForm">
 
-            <form action="" method="post">
+            <form>
 
                 <p class="enterEmail">
-                    <label for="mail">E-mail</label>
-                    <input type="email" id="mail" name="user_mail" />
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="user_mail" autocomplete="off" multiple />
                 </p>
                 <p class="enterPassword">
                     <label for="password"><b>Mot de passe</b></label>
-                    <input type="password" name="password" required>
+                    <input type="password" id="password" name="password" autocomplete="off" required />
                 </p>
 
-                <p class="loginButton">
-                    <button type="submit">Se connecter</button>
+                <p class="logInButton">
+                    <button class="loginButton" type="submit">Se connecter</button>
                 </p>
-                <p class="forgotPasswword">
+                <p class="forgotPassword">
                     <a href="#">Mot de passe oublié</a>
                 </p>
-
-
+            </form>
+            <p id="error"> </p>
         </div>
 
-        </form>
+
     </main>
 
     <footer class="loginFooter">
