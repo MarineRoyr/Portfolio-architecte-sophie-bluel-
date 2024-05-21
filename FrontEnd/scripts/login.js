@@ -15,7 +15,7 @@ async function loginUsers() {
   const mail = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   // on stocke dans une variable, la charge utile du body, en la traduisant au format Json
-  const bodyContent = JSON.stringify({
+  let bodyContent = JSON.stringify({
     email: mail,
     password: password,
   });
@@ -29,12 +29,12 @@ async function loginUsers() {
     });
 
     // on crée une variable qui stocke la réponse du fetch en la convertissant au format Json
-    const data = await response.json();
+    let data = await response.json();
     // si la valeur de la réponse est ok, on log un message de validation
     if (response.ok) {
       console.log("Login API Response OK");
       // et on stocke dans un objet qui formatera l'ancienne valeur de data, les valeurs obtenues dans notre response
-      const { userId, token } = data;
+      let { userId, token } = data;
 
       // on stocke les valeurs obtenues dans un local storage, persistant après fermeture de session navigateur
       // On y stocke la chaine de caractère nommant l'élément et les valeurs stockées dans la variable data

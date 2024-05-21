@@ -135,6 +135,9 @@ main {
   font-family: "Work Sans";
   font-size: 14px;
 }
+
+/* MENU NAVIGATION ----------------------------------------------------------------------------------------------------------------------------------------*/
+
 header {
   display: flex;
   justify-content: space-between;
@@ -231,6 +234,8 @@ nav a:hover {
   margin-bottom: 0.5em;
 }
 
+/* FILTRES RECHERCHE mode LOGOUT -------------------------------------------------------------------------------------------------------------------*/
+
 .filters {
   display: flex;
   justify-content: center;
@@ -252,6 +257,8 @@ nav a:hover {
   background-color: rgba(29, 97, 84, 1);
   color: white;
 }
+
+/* MODE LOG OK - ADMIN -------------------------------------------------------------------------------------------------------------------*/
 
 .modeAdmin {
   display: flex;
@@ -283,6 +290,8 @@ nav a:hover {
   color: black;
 }
 
+/* ELEMENTS DE LA MODALE -------------------------------------------------------------------------------------------------------------------*/
+
 .modalContainer {
   display: none;
   position: fixed;
@@ -295,7 +304,7 @@ nav a:hover {
   display: block;
 }
 .modal {
-  width: 43%;
+  width: 35%;
   height: 38%;
   top: 660px;
   left: 405px;
@@ -321,32 +330,54 @@ nav a:hover {
   padding: 8px 10px;
   border: none;
   position: absolute;
-  font-size: 1em;
   top: 10px;
   right: 10px;
   cursor: pointer;
+  background-color: #fff;
+}
+
+.modalReturn {
+  padding: 8px 10px;
+  border: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  display: none;
 }
 
 .modalTitle {
   font-family: "Work Sans";
   font-size: 166%;
-  margin-bottom: 46px;
+  margin-bottom: 3%;
 }
 
 .projectModal {
   display: flex;
-  flex-wrap: wrap;
   border-bottom: solid 1px #b3b3b3;
-  margin: 0px 105px 38px 105px;
+  margin: 38px 100px 38px 100px;
+}
+.projectImg {
+  display: flex;
+  flex-wrap: wrap;
   gap: 9px;
+  position: relative;
 }
 
-.projectModal img {
-  width: 17%;
+.projectImg img {
+  width: 16%;
   margin-bottom: 29px;
 }
 
-.newPhoto {
+#iconeDelete {
+  width: 3.5%;
+  height: auto;
+  position: absolute;
+  transform: translate(-180%, 35%);
+}
+
+.buttonModal {
   background-color: rgba(29, 97, 84, 1);
   font-size: 100%;
   font-family: "syne";
@@ -356,6 +387,95 @@ nav a:hover {
   border: solid rgba(29, 97, 84, 1) 1px;
   width: 33%;
 }
+
+.modalTxt {
+  font-family: "Work Sans";
+  font-size: 10px;
+  text-align: center;
+}
+
+.modalForm input {
+  height: 4%;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.modalForm label {
+  font-size: 100%;
+  font-family: "Work Sans";
+}
+.modalForm input,
+select {
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  width: 420px;
+  height: 51px;
+}
+
+.buttonModal2 {
+  background-color: #a7a7a7;
+  font-size: 100%;
+  font-family: "syne";
+  border-radius: 60px;
+  color: rgba(255, 254, 248, 1);
+  padding: 9px 15px 9px 15px;
+  width: 33%;
+  border: none;
+  margin-top: 20px;
+}
+
+.modal2 {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadPhoto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e8f1f6;
+  font-family: "Work Sans";
+  padding: 24px 124px 20px 124px;
+  margin-bottom: 30px;
+  margin-top: 0;
+  gap: 7px;
+}
+
+#fileInput {
+  visibility: hidden;
+}
+
+label[for="fileInput"] {
+  cursor: pointer;
+}
+
+.loadPhoto button {
+  background-color: #cbd6dc;
+  font-size: 87.5%;
+  font-family: "Work Sans";
+  border-radius: 60px;
+  color: rgba(48, 102, 133, 1);
+  padding: 9px 15px 9px 15px;
+  border: none;
+  width: 100%;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border-bottom: solid 1px #b3b3b3;
+  padding-bottom: 47px;
+}
+
+.modalForm select {
+  color: #a7a7a7;
+  font-family: "Work Sans";
+}
+
+/* ELEMENTS DU PORTFOLIO -------------------------------------------------------------------------------------------------------------------*/
 
 #portfolio h2 {
   text-align: center;
@@ -372,6 +492,8 @@ nav a:hover {
 .gallery img {
   width: 100%;
 }
+
+/* ELEMENT FORMULAIRE CONTACT -------------------------------------------------------------------------------------------------------------------*/
 #contact {
   width: 50%;
   margin: auto;
@@ -414,6 +536,8 @@ input[type="submit"] {
   border-radius: 60px;
 }
 
+/* FILTRES RECHERCHE LOGOUT -------------------------------------------------------------------------------------------------------------------*/
+
 footer {
   background-color: white;
 }
@@ -424,7 +548,7 @@ footer nav ul {
   margin: 2em;
 }
 
-/* Login PAGE ------------------------------------*/
+/* PAGE LOGIN  ---------------------------------------------------------------------------------------------------------------------------------*/
 
 .loginPage {
   font-family: "Work Sans";
@@ -502,4 +626,92 @@ footer nav ul {
   margin-top: 5%;
   font-weight: 700;
   color: #b1663c;
+}
+
+/* MEDIA QUERIES -------------------------------------------------------------------------------------------------------------------*/
+
+@media (max-width: 1400px) {
+  .modalTitle {
+    font-family: "Work Sans";
+    font-size: 75%;
+    margin-bottom: 2%;
+  }
+
+  .buttonModal,
+  .buttonModal2 {
+    font-size: 70%;
+    height: min-content;
+  }
+
+  #iconeDelete {
+    width: 4%;
+    height: auto;
+  }
+
+  .loadPhoto {
+    padding: 20px 50px 18px 50px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    gap: 5px;
+  }
+
+  .modalForm input {
+    height: auto;
+    width: auto;
+    font-size: 75%;
+  }
+
+  .modalForm input,
+  select {
+    height: auto;
+    width: auto;
+  }
+
+  .modalForm {
+    padding-bottom: 10px;
+    border: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .modalTitle {
+    font-family: "Work Sans";
+    font-size: 50%;
+    margin-bottom: 2%;
+  }
+
+  .buttonModal,
+  .buttonModal2 {
+    font-size: 50%;
+    height: min-content;
+  }
+
+  #iconeDelete {
+    width: 4%;
+    height: auto;
+  }
+
+  .loadPhoto {
+    padding: 10px 30px 10px 30px;
+    margin-bottom: 5px;
+    margin-top: 0;
+    gap: 3px;
+  }
+
+  .modalForm input {
+    height: auto;
+    width: auto;
+    font-size: 50%;
+  }
+
+  .modalForm input,
+  select {
+    height: auto;
+    width: auto;
+  }
+
+  .modalForm {
+    padding-bottom: 5px;
+    border: none;
+  }
 }

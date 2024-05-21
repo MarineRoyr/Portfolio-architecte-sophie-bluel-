@@ -6,13 +6,13 @@ const galleryElement = document.querySelector(".gallery");
 
 //Déclaration d'une variable qui contiendra un objet de type tableau avec tous les projets
 let allProjects;
-
+let data;
 //Récupération des projets depuis l'API //........................................................................................................................................
 
 // Déclaration d'une fonction pour récupérer les projets depuis l'API
 async function getWorks() {
   // Déclaration d'une variable
-  let data;
+
   // Déclaration d'une variable qui contiendra le fetch
   let response = await fetch(baseUrl + "/api/works");
   // Si la réponse du fetch est différente, dans la promesse, de la valeur ok, on retourne une erreur
@@ -24,16 +24,15 @@ async function getWorks() {
     //puis on stocke cette réponse json dans la varioble allProject sous la forme d'un tableau et on récupère ce tableau dans notre console
     allProjects = Array.from(data);
   }
-  console.log(data);
+  displayWorks(data);
 }
 
 // on appelle la fonction afin qu'elle se réalise à chaque actualisation de la page
 getWorks();
-
 //Affichage des projets dans le DOM //........................................................................................................................................
 
 // On appelle une fonction pour générer les projets dans le DOM, avec deuc paramètres, qui tons automatiquement déclarés comme variables qu'on pourra appeler ensuite
-function displayWorks(data) {
+async function displayWorks(data) {
   //Si la valeur de la variable est null on log un message d'erreur
   if (!galleryElement) {
     console.log("Aucun projet chargé");
@@ -112,7 +111,7 @@ async function getCategoriesApi(responseCategories) {
       );
 
       // on récupère dans une variable, par son id, le titre prévu pour les projets
-      let projetsSection = document.getElementById("mes-projets-title");
+      const projetsSection = document.getElementById("mes-projets-title");
       // on ajoute à cet titre une méthode js qui permet d'ancrer l'écran sur les projets lorsque la fonction est activée
       projetsSection.scrollIntoView();
       // on déclare un paramètre pour la fonction à venir, les id de notre tableau des catégories, contenues dans la variable nameCategories
@@ -145,13 +144,18 @@ getCategoriesApi(responseCategories);
 
 // Après authentification -------------------------------------------
 
+const editionBanner = document.querySelector(".editionBanner");
+
+//Les fonctions Admin après authentification correcte //........................................................................................................................................
 function logUserOk() {
   document.addEventListener("DOMContentLoaded", function loginSuccess() {
-    let logIn = document.querySelector(".login");
+    const logIn = document.querySelector(".login");
     if (localStorage.getItem("loginSuccess") === "true") {
       logIn.textContent = "logout";
+      getWorks();
       modalForProject();
-      updateProjectModal();
+      getProjectModal();
+
       logIn.addEventListener("click", function logOutUser() {
         if (logIn.textContent === "logout") {
           localStorage.removeItem("loginSuccess");
@@ -162,6 +166,7 @@ function logUserOk() {
       });
     } else {
       logIn.textContent = "login";
+      editionBanner.style.display = "none";
       logOutUser();
     }
   });
@@ -169,17 +174,18 @@ function logUserOk() {
 
 logUserOk();
 
+//Affichage de la modale  //........................................................................................................................................
+
 function modalForProject() {
-  let displayfilter = document.querySelector(".filters");
+  const displayfilter = document.querySelector(".filters");
   displayfilter.style.display = "none";
-  let modifyButton = document.querySelector(".modifyProject");
+  const modifyButton = document.querySelector(".modifyProject");
   modifyButton.innerHTML = ` <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M13.5229 1.68576L13.8939 2.05679C14.1821 2.34503 14.1821 2.81113 13.8939 3.0963L13.0016 3.99169L11.5879 2.57808L12.4803 1.68576C12.7685 1.39751 13.2346 1.39751 13.5198 1.68576H13.5229ZM6.43332 7.73578L10.5484 3.61759L11.9621 5.03121L7.84387 9.14633C7.75494 9.23525 7.64455 9.29964 7.52496 9.33337L5.73111 9.84546L6.2432 8.05162C6.27693 7.93203 6.34133 7.82164 6.43025 7.73271L6.43332 7.73578ZM11.4408 0.646245L5.39074 6.6932C5.12397 6.95998 4.93078 7.28808 4.82959 7.64685L3.9526 10.7133C3.879 10.9708 3.94953 11.2468 4.13965 11.4369C4.32977 11.627 4.60574 11.6976 4.86332 11.624L7.92973 10.747C8.29156 10.6427 8.61967 10.4495 8.88338 10.1858L14.9334 4.13888C15.7951 3.27722 15.7951 1.87894 14.9334 1.01728L14.5624 0.646245C13.7007 -0.215415 12.3024 -0.215415 11.4408 0.646245ZM2.69844 1.84214C1.20816 1.84214 0 3.05031 0 4.54058V12.8812C0 14.3715 1.20816 15.5796 2.69844 15.5796H11.0391C12.5293 15.5796 13.7375 14.3715 13.7375 12.8812V9.44683C13.7375 9.039 13.4094 8.71089 13.0016 8.71089C12.5937 8.71089 12.2656 9.039 12.2656 9.44683V12.8812C12.2656 13.5589 11.7167 14.1078 11.0391 14.1078H2.69844C2.02076 14.1078 1.47188 13.5589 1.47188 12.8812V4.54058C1.47188 3.86291 2.02076 3.31402 2.69844 3.31402H6.13281C6.54065 3.31402 6.86875 2.98591 6.86875 2.57808C6.86875 2.17025 6.54065 1.84214 6.13281 1.84214H2.69844Z" fill="black"/>
     </svg><a href="#"> 
     modifier</a>`;
-  let modalContainer = document.querySelector(".modalContainer");
-  let modalTrigger = document.querySelectorAll(".modalTrigger");
-  let editionBanner = document.querySelector(".editionBanner");
+  const modalContainer = document.querySelector(".modalContainer");
+  const modalTrigger = document.querySelectorAll(".modalTrigger");
   modalTrigger.forEach((trigger) =>
     trigger.addEventListener("click", toggleModal)
   );
@@ -188,9 +194,23 @@ function modalForProject() {
   }
 }
 
-async function updateProjectModal() {
-  let projectModal = document.querySelector(".projectModal");
+//Déclaration des variables qui seront utiles tout au long des fonctions relatives à la modale  //........................................................................................................................................
+
+const projectModal = document.querySelector(".projectModal");
+const modal2 = document.querySelector(".modal2");
+const buttonModal = document.querySelector(".buttonModal");
+const modalTitle = document.querySelector(".modalTitle");
+const projectImg = document.querySelector(".projectImg");
+const modalReturn = document.querySelector(".modalReturn");
+const buttonLoadPhoto = document.querySelector(".buttonLoadPhoto");
+const buttonModal2 = document.querySelector(".buttonModal2");
+const fileInput = document.getElementById("fileInput");
+const closeModal = document.querySelector(".closeModal");
+//Fonction pour récupérer les miniatures de la modale depuis l'API  //........................................................................................................................................
+
+async function getProjectModal() {
   projectModal.innerHTML = "";
+  modalTitle.textContent = "Galerie photo";
   if (!projectModal) {
     console.error("API Projets datas unfound.");
     return;
@@ -201,18 +221,197 @@ async function updateProjectModal() {
       throw new Error("Problème avec le serveur");
     } else {
       data = await response.json();
-      allProjects = Array.from(data);
+      allProjects = new Set(data);
+      console.log(allProjects);
+      updateProjectModal(allProjects);
     }
-    data.forEach((item) => {
-      projectModal.classList.add("projectModal");
-      const imageElement = document.createElement("img");
-      const deleteIcon = document.createElement("i");
+  }
 
-      imageElement.src = item.imageUrl;
-      imageElement.alt = item.title;
-      projectModal.appendChild(imageElement);
-      projectModal.appendChild(deleteIcon);
-    });
-    console.log("Modal 1 - Gallery updated");
+  //Fonction pour afficher la modale 1 avec miniatures et appel de la fonction suppression sur les miniatures  //........................................................................................................................................
+
+  function updateProjectModal(allProjects) {
+    allProjects.forEach(modal1);
   }
 }
+
+function modal1(item) {
+  let index = item.index;
+  let projectId = item.id;
+  let projectTitle = item.title;
+
+  projectModal.classList.add("projectModal");
+  projectImg.classList.add("projectImg");
+  let imageElement = document.createElement("img");
+  let deleteIcon = document.createElement("i");
+
+  deleteIcon.innerHTML = `<img id="iconeDelete" src="./assets/icons/iconeDelete.png" alt="Delete">`;
+  imageElement.src = item.imageUrl;
+  imageElement.alt = item.title;
+  projectImg.appendChild(imageElement);
+  projectImg.appendChild(deleteIcon);
+  projectModal.appendChild(projectImg);
+
+  deleteIcon.addEventListener("click", function (event) {
+    // on lui applique une méthode pour éviter rechargement de page et on joue la fonction q'on paramétra ensuite à chaque submit
+    event.preventDefault();
+    deleteProject(projectId, projectTitle);
+    console.log("Delete Project");
+  });
+}
+
+//Evenement sur le click pour afficher la seconde modale   //........................................................................................................................................
+
+buttonModal.addEventListener("click", Modal2);
+
+//fonction avec affichage de la seconde modale  //........................................................................................................................................
+
+function Modal2() {
+  modalTitle.textContent = "Ajout photo";
+  projectModal.style.display = "none";
+  modal2.style.display = "flex";
+  modalReturn.style.display = "block";
+  buttonModal.style.display = "none";
+  const iconeFileInput = document.getElementById("iconImgModal");
+
+  fileInput.addEventListener("change", previewImg);
+
+  function previewImg() {
+    const file = this.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.addEventListener("load", (event) => displayImage(event, file));
+
+    function displayImage(event, file) {
+      const loadPhotoDisplay = document.querySelector(".loadPhoto");
+      loadPhotoDisplay.innerHTML = "";
+      const imageElement = document.createElement("img");
+      imageElement.src = event.target.result;
+      imageElement.alt = "Image sélectionnée";
+      imageElement.style.maxWidth = "129px";
+      imageElement.style.maxHeight = "169px";
+      loadPhotoDisplay.style.padding = "0";
+      console.log(file.name);
+      loadPhotoDisplay.appendChild(imageElement);
+    }
+  }
+
+  postProjects();
+
+  modalReturn.addEventListener("click", () => {
+    modal2.style.display = "none";
+    modalTitle.textContent = "Galerie photo";
+    modalReturn.style.display = "none";
+    buttonModal.style.display = "block";
+    projectModal.style.display = "block";
+  });
+}
+
+//Fonction qui permet la supression des projets  //........................................................................................................................................
+
+async function deleteProject(projectId, projectTitle) {
+  const userConfirmed = window.confirm(
+    `Confirmez vous la suppression du projet ${projectTitle} ?`
+  );
+  const token = localStorage.getItem("token");
+
+  if (userConfirmed) {
+    const response = await fetch(
+      "http://localhost:5678/api/works/" + projectId,
+      {
+        method: "DELETE",
+        headers: { accept: "*/*", Authorization: "Bearer " + token },
+      }
+    );
+  }
+}
+
+const titreInput = document.getElementById("titre");
+const categorieSelect = document.getElementById("categorie");
+
+async function postProjects() {
+  //on charge les catégories depuis l'API dans notre formulaire
+  fetch(baseUrl + "/api/categories")
+    .then((response) => response.json())
+    .then((data) => {
+      //On évite l'accumulation des catégories
+      while (categorieSelect.firstChild) {
+        categorieSelect.removeChild(categorieSelect.firstChild);
+      }
+      //Choix par défaut catégorie
+      const emptyOption = { id: 0, name: "" };
+      data.unshift(emptyOption);
+      data.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.textContent = category.name;
+        categorieSelect.appendChild(option);
+      });
+    })
+    .catch((error) => console.error("API category loading error", error));
+
+  buttonModal2.addEventListener("click", function (event) {
+    event.preventDefault();
+    const titreValue = titreInput.value.trim();
+    const categorieValue = categorieSelect.value.trim();
+    const maxLengthTitle = 45;
+    //vérification du fichier
+
+    let selectedFile = fileInput.files[0];
+    if (!selectedFile) {
+      console.error("No picture selected.");
+      return;
+    }
+    //Error title length
+    if (titreValue.length > maxLengthTitle) {
+      console.error("Titre length > 45");
+      alert("Veuillez limiter le titre à 45 caractères");
+      return;
+    }
+    // on crée une variable qui stocke les éléments de notre formulaire, et qui constituera le corps de la requête POST
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    formData.append("title", titreValue);
+    formData.append("category", categorieValue);
+    const token = localStorage.getItem("token");
+
+    // si le token n'est pas défini, on autorise pas la requête post et on envoie un message d'erreur dans la console
+    if (!token) {
+      console.error("Unfound token in the localStorage.");
+      return;
+    }
+
+    // on crée avec un fetch la requête POST qui permettra de poster un nouveau projet relié à notre formulaire HTML
+
+    fetch(baseUrl + "/api/works", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Erreur: ${response.status} - ${response.statusText}`
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data !== null) {
+          alert("Le projet a bien été ajouté.");
+          location.reload();
+        } else {
+          alert("Une erreur est survenue lors de l'ajout du projet.");
+        }
+      })
+      .catch((error) => {
+        console.error("ERROR:", error);
+      });
+  });
+}
+
+closeModal.addEventListener("click", (e) => {
+  location.reload();
+});
