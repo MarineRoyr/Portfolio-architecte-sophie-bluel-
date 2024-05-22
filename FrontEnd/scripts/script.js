@@ -167,7 +167,6 @@ function logUserOk() {
     } else {
       logIn.textContent = "login";
       editionBanner.style.display = "none";
-      logOutUser();
     }
   });
 }
@@ -196,20 +195,27 @@ function modalForProject() {
 
 //Déclaration des variables qui seront utiles tout au long des fonctions relatives à la modale  //........................................................................................................................................
 
+//Modal visu 1
 const projectModal = document.querySelector(".projectModal");
-const modal2 = document.querySelector(".modal2");
-const buttonModal = document.querySelector(".buttonModal");
 const modalTitle = document.querySelector(".modalTitle");
+const buttonModal = document.querySelector(".buttonModal");
 const projectImg = document.querySelector(".projectImg");
+const closeModal = document.querySelector(".closeModal");
+
+//Modal visu 2
 const modalReturn = document.querySelector(".modalReturn");
+const modal2 = document.querySelector(".modal2");
+const modalForm = document.querySelector(".modalForm");
+const loadPhotoDisplay = document.querySelector(".loadPhoto");
 const buttonLoadPhoto = document.querySelector(".buttonLoadPhoto");
 const buttonModal2 = document.querySelector(".buttonModal2");
 const fileInput = document.getElementById("fileInput");
-const closeModal = document.querySelector(".closeModal");
+const titreInput = document.getElementById("titre");
+const categorieSelect = document.getElementById("categorie");
+
 //Fonction pour récupérer les miniatures de la modale depuis l'API  //........................................................................................................................................
 
 async function getProjectModal() {
-  projectModal.innerHTML = "";
   modalTitle.textContent = "Galerie photo";
   if (!projectModal) {
     console.error("API Projets datas unfound.");
@@ -228,14 +234,14 @@ async function getProjectModal() {
   }
 
   //Fonction pour afficher la modale 1 avec miniatures et appel de la fonction suppression sur les miniatures  //........................................................................................................................................
+}
 
-  function updateProjectModal(allProjects) {
-    allProjects.forEach(modal1);
-  }
+function updateProjectModal(allProjects) {
+  projectImg.innerHTML = "";
+  allProjects.forEach(modal1);
 }
 
 function modal1(item) {
-  let index = item.index;
   let projectId = item.id;
   let projectTitle = item.title;
 
@@ -255,7 +261,6 @@ function modal1(item) {
     // on lui applique une méthode pour éviter rechargement de page et on joue la fonction q'on paramétra ensuite à chaque submit
     event.preventDefault();
     deleteProject(projectId, projectTitle);
-    console.log("Delete Project");
   });
 }
 
@@ -271,42 +276,57 @@ function Modal2() {
   modal2.style.display = "flex";
   modalReturn.style.display = "block";
   buttonModal.style.display = "none";
-  const iconeFileInput = document.getElementById("iconImgModal");
+  const imageElement = document.createElement("img");
 
   fileInput.addEventListener("change", previewImg);
 
   function previewImg() {
     const file = this.files[0];
     const fileReader = new FileReader();
+    if (fileInput.files.length > 0) {
+      const selectedFile = fileInput.files[0];
+      // Vérification de la taille du fichier (4 Mo maximum)
+      if (selectedFile.size > 4 * 1024 * 1024) {
+        console.error("PICTURE SIZE exceeds limits (4mo).");
+        alert("La taille de l'image ne doit pas dépasser 4 Mo.");
+        return;
+      }
+    }
     fileReader.readAsDataURL(file);
 
     fileReader.addEventListener("load", (event) => displayImage(event, file));
 
     function displayImage(event, file) {
-      const loadPhotoDisplay = document.querySelector(".loadPhoto");
       loadPhotoDisplay.innerHTML = "";
-      const imageElement = document.createElement("img");
       imageElement.src = event.target.result;
       imageElement.alt = "Image sélectionnée";
       imageElement.style.maxWidth = "129px";
       imageElement.style.maxHeight = "169px";
-      loadPhotoDisplay.style.padding = "0";
-      console.log(file.name);
+      loadPhotoDisplay.style.padding = " 0px 124px 0px 124px";
       loadPhotoDisplay.appendChild(imageElement);
     }
   }
 
   postProjects();
-
-  modalReturn.addEventListener("click", () => {
-    modal2.style.display = "none";
-    modalTitle.textContent = "Galerie photo";
-    modalReturn.style.display = "none";
-    buttonModal.style.display = "block";
-    projectModal.style.display = "block";
-  });
 }
 
+modalReturn.addEventListener("click", () => {
+  loadPhotoDisplay.innerHTML = `
+  <img width="68px" id="iconImgModal" src="./assets/icons/iconImgModal.png" alt="Icone Image">
+  </img>
+
+  <button class="buttonLoadPhoto"><label for="fileInput"> + Ajouter photo </label> </button>
+  <p class="indicationPhoto"> jpg, png : 4mo max </p>
+`;
+  loadPhotoDisplay.style.padding = "24px 124px 20px 124px";
+
+  modal2.style.display = "none";
+  modalTitle.textContent = "Galerie photo";
+  modalReturn.style.display = "none";
+  buttonModal.style.display = "block";
+  projectModal.style.display = "block";
+  clearInput();
+});
 //Fonction qui permet la supression des projets  //........................................................................................................................................
 
 async function deleteProject(projectId, projectTitle) {
@@ -322,12 +342,26 @@ async function deleteProject(projectId, projectTitle) {
         method: "DELETE",
         headers: { accept: "*/*", Authorization: "Bearer " + token },
       }
-    );
+    ).then((response) => {
+      if (response.ok) {
+        alert("Projet supprimé");
+        fetch(baseUrl + "/api/works")
+          .then((response) => response.json())
+          .then((data) => updateProjectModal(data))
+          .catch((error) =>
+            console.error("Erreur chargement des projets depuis l'API", error)
+          );
+      } else {
+        console.error(
+          "Erreur, le projet n'a pas pus être supprimé " + response.status
+        );
+        return response.json();
+      }
+    });
   }
 }
 
-const titreInput = document.getElementById("titre");
-const categorieSelect = document.getElementById("categorie");
+// Fonction qui poste les projets sur l'API
 
 async function postProjects() {
   //on charge les catégories depuis l'API dans notre formulaire
@@ -362,7 +396,7 @@ async function postProjects() {
       console.error("No picture selected.");
       return;
     }
-    //Error title length
+    //condition de la rédaction du titre
     if (titreValue.length > maxLengthTitle) {
       console.error("Titre length > 45");
       alert("Veuillez limiter le titre à 45 caractères");
@@ -401,7 +435,15 @@ async function postProjects() {
       .then((data) => {
         if (data !== null) {
           alert("Le projet a bien été ajouté.");
-          location.reload();
+          modal2.style.display = "none";
+          modalTitle.textContent = "Galerie photo";
+          modalReturn.style.display = "none";
+          buttonModal.style.display = "block";
+          projectModal.style.display = "block";
+          fetch(baseUrl + "/api/works")
+            .then((response) => response.json())
+            .then((data) => updateProjectModal(data));
+          return;
         } else {
           alert("Une erreur est survenue lors de l'ajout du projet.");
         }
@@ -412,6 +454,10 @@ async function postProjects() {
   });
 }
 
-closeModal.addEventListener("click", (e) => {
+closeModal.addEventListener("click", function refreshpage() {
   location.reload();
 });
+
+function clearInput() {
+  document.querySelector(".modalForm").reset();
+}

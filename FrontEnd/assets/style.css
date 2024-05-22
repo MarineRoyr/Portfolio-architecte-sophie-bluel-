@@ -181,6 +181,7 @@ nav ul {
 nav li {
   padding: 0 10px;
   font-size: 1.2em;
+  font-family: "Work Sans";
 }
 
 .navLien a {
@@ -388,7 +389,7 @@ nav a:hover {
   width: 33%;
 }
 
-.modalTxt {
+.indicationPhoto {
   font-family: "Work Sans";
   font-size: 10px;
   text-align: center;
@@ -486,11 +487,12 @@ label[for="fileInput"] {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  grid-row-gap: 32px;
 }
 
 .gallery img {
   width: 100%;
+  min-height: 100%;
 }
 
 /* ELEMENT FORMULAIRE CONTACT -------------------------------------------------------------------------------------------------------------------*/
@@ -629,89 +631,3 @@ footer nav ul {
 }
 
 /* MEDIA QUERIES -------------------------------------------------------------------------------------------------------------------*/
-
-@media (max-width: 1400px) {
-  .modalTitle {
-    font-family: "Work Sans";
-    font-size: 75%;
-    margin-bottom: 2%;
-  }
-
-  .buttonModal,
-  .buttonModal2 {
-    font-size: 70%;
-    height: min-content;
-  }
-
-  #iconeDelete {
-    width: 4%;
-    height: auto;
-  }
-
-  .loadPhoto {
-    padding: 20px 50px 18px 50px;
-    margin-bottom: 10px;
-    margin-top: 0;
-    gap: 5px;
-  }
-
-  .modalForm input {
-    height: auto;
-    width: auto;
-    font-size: 75%;
-  }
-
-  .modalForm input,
-  select {
-    height: auto;
-    width: auto;
-  }
-
-  .modalForm {
-    padding-bottom: 10px;
-    border: none;
-  }
-}
-
-@media (max-width: 1024px) {
-  .modalTitle {
-    font-family: "Work Sans";
-    font-size: 50%;
-    margin-bottom: 2%;
-  }
-
-  .buttonModal,
-  .buttonModal2 {
-    font-size: 50%;
-    height: min-content;
-  }
-
-  #iconeDelete {
-    width: 4%;
-    height: auto;
-  }
-
-  .loadPhoto {
-    padding: 10px 30px 10px 30px;
-    margin-bottom: 5px;
-    margin-top: 0;
-    gap: 3px;
-  }
-
-  .modalForm input {
-    height: auto;
-    width: auto;
-    font-size: 50%;
-  }
-
-  .modalForm input,
-  select {
-    height: auto;
-    width: auto;
-  }
-
-  .modalForm {
-    padding-bottom: 5px;
-    border: none;
-  }
-}
